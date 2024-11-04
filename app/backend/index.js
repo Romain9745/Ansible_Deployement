@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/books', (req, res) => {
+app.get('/findBooks', (req, res) => {
   const title = req.query.title
   const author = req.query.author
   if (title) {
