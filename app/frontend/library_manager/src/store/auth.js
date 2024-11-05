@@ -6,6 +6,7 @@ import {jwtDecode} from "jwt-decode";
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuthenticated: false,
+      userId: null,
   }),
 
   actions: {
@@ -17,13 +18,15 @@ export const useAuthStore = defineStore('auth', {
         this.isAuthenticated = true;
         this.token = response.data.token;
         localStorage.setItem('token', this.token);
-
+        const decoded = jwtDecode(this.token);
+        this.userId = decoded.user.id;
         // Configurer le token pour les requêtes suivantes
         axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
     },
 
     logout() {
       this.isAuthenticated = false;
+        this.userId = null;
       localStorage.removeItem('token');
       delete axios.defaults.headers.common['Authorization'];
     },
@@ -32,6 +35,8 @@ export const useAuthStore = defineStore('auth', {
       const token = localStorage.getItem('token');
       if (token && !this.isTokenExpired(token)) {
         this.isAuthenticated = true;
+        const decoded = jwtDecode(token);
+        this.userId = decoded.decoded.user.id;
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       } else {
         this.logout();
