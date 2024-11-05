@@ -1,6 +1,7 @@
 // stores/auth.js
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import {jwtDecode} from "jwt-decode";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -14,6 +15,7 @@ export const useAuthStore = defineStore('auth', {
           throw new Error('Login failed');
         }
         this.isAuthenticated = true;
+        this.token = response.data.token;
         localStorage.setItem('token', this.token);
 
         // Configurer le token pour les requêtes suivantes

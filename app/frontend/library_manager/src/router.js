@@ -3,10 +3,12 @@ import { useAuthStore } from './store/auth';
 
 import login from './components/Login.vue'
 import signup from './components/Signup.vue'
+import main from './components/Main.vue'
 
 const routes = [
   { path: '/login',name: 'login' ,component: login },
   { path: '/signup',name: 'signup', component: signup },
+    {path: '/', name:"home", component: main}
   //{ path: '/library', component:  },
 
 ]
