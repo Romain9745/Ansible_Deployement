@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth', {
       if (token && !this.isTokenExpired(token)) {
         this.isAuthenticated = true;
         const decoded = jwtDecode(token);
-        this.userId = decoded.decoded.user.id;
+        this.userId = decoded.user.id;
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       } else {
         this.logout();
