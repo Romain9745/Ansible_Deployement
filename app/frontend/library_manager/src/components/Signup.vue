@@ -3,7 +3,7 @@
   <main class="d-flex justify-content-center align-items-center vh-100">
     <div class="container">
       <h2 class="text-center mb-4">Sign Up</h2>
-      <form class="shadow p-4 rounded bg-light">
+      <BForm @submit="onSubmit" v-if="show" class="shadow p-4 rounded bg-light">
         <BFormGroup
           id="input-group-1"
           label="Username:"
@@ -54,7 +54,7 @@
           <BButton type="submit" variant="primary">Submit</BButton>
           <BButton type="button" variant="danger" @click="onLogin">Login</BButton>
         </div>
-      </form>
+      </BForm>
     </div>
   </main>
 </template>
@@ -69,6 +69,7 @@
   
   const form = reactive({
     password: '',
+    confirmPassword: '',
     username: '',
   });
   
@@ -78,8 +79,8 @@
     event.preventDefault();
     try {
         // Posting data with Axios
-        await axios.post('https://localhost:3000/signin', formData.value).then(response => {
-            if (response.status === 200) {
+        await axios.post('http://localhost:3000/auth/signup', form).then(response => {
+            if (response.status === 201) {
                 router.push({ name: 'login' })
             } else {
                 alert('Invalid credentials');
