@@ -1,0 +1,47 @@
+import pool from './mysql.js';
+
+export function getBooksByUser (id_user) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const connection = await pool.getConnection()
+      const [rows] = await connection.query(
+        'SELECT * FROM Books WHERE id_user = ?',
+        [id_user]
+      )
+      connection.release()
+      resolve(rows)
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
+export function addBookToUser (id_user, book) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let publish_date = new Date(book.publish_date)
+      const connection = await pool.getConnection()
+      await connection.query(
+        'INSERT INTO Books (id_user, title, author, date) VALUES (?, ?, ?, ?)',
+        [id_user, book.title, book.author, publish_date]
+      )
+      connection.release()
+      resolve()
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
+export function deleteBook (id_book) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const connection = await pool.getConnection()
+      await connection.query('DELETE FROM Books WHERE id = ?', [id_book])
+      connection.release()
+      resolve()
+    } catch (e) {
+      reject(e)
+    }
+  })
+}

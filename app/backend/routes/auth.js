@@ -25,7 +25,7 @@ router.post('/login',[
         if (!validPassword) {
             return res.status(401).send('Wrong password or username');
         }
-        const token = jwt.sign({ id,username}, process.env.SECRET_KEY, { expiresIn: '1800s' });
+        const token = jwt.sign({ id,user}, process.env.SECRET_KEY, { expiresIn: '1800s' });
         res.status(200).json({ token });
         }
     catch (error) {

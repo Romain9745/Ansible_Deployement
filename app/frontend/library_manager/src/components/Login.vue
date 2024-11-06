@@ -61,7 +61,7 @@ const onSubmit = async (event) => {
   event.preventDefault();
       try {
           await AuthStore.login(form.username, form.password);
-          router.push({ name: 'library' });
+          router.push({ name: 'home' });
       } catch (error) {
           if (error.response.status === 401) {
               alert('Invalid credentials');
