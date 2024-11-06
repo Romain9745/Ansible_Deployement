@@ -12,9 +12,12 @@ export function retrieveBooksByTitle (title) {
         res.on('end', () => {
           try {
             for (let book of JSON.parse(data).docs) {
+              if(Array.isArray(book.author_name)){
+                book.author_name = book.author_name[0]
+              }
               let bookToAdd = {
                 title: book.title,
-                author: book.author_name[0],
+                author: book.author_name,
                 publish_date: book.first_publish_year
               }
               books.push(bookToAdd)
@@ -43,6 +46,9 @@ export function retrieveBooksByAuthor (author) {
         .on('end', () => {
           try {
             for (let book of JSON.parse(data).docs) {
+              if(Array.isArray(book.author_name)){
+                book.author_name = book.author_name[0]
+              }
               let bookToAdd = {
                 title: book.title,
                 author: book.author_name[0],
