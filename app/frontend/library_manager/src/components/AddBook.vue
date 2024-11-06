@@ -2,7 +2,7 @@
 import {computed, ref} from 'vue';
 import axios from "axios";
 import {useAuthStore} from "@/store/auth.js";
-import Navbar from "@/components/Navbar.vue";
+import router from "@/router.js";
 
 const authStore = useAuthStore();
 const userId = computed(() => authStore.userId);
@@ -88,10 +88,15 @@ function addBookToLibrary(book) {
         console.log(error)
       })
 }
+function goToLibrary() {
+  router.push({name: "home"})
+}
 </script>
 
 <template>
-  <Navbar/>
+  <nav class="navbar navbar-expand-lg navbar-light w-100">
+      <BButton @click="goToLibrary" class="m-3">Library</BButton>
+  </nav>
   <main class="d-flex flex-column align-items-center justify-content-start vh-100">
     <h1>Add book</h1>
     <div class="d-flex w-100 mb-3">

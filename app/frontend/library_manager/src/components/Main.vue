@@ -3,7 +3,6 @@ import {useAuthStore} from '../store/auth.js';
 import {computed, onMounted, ref} from 'vue';
 import axios from "axios";
 import {useRouter} from "vue-router";
-import Navbar from "@/components/Navbar.vue";
 
 const authStore = useAuthStore();
 const userId = computed(() => authStore.userId);
@@ -49,7 +48,9 @@ function openAddBookPage() {
 </script>
 
 <template>
-  <Navbar/>
+  <nav class="navbar navbar-expand-lg navbar-light w-100">
+      <BButton @click="openAddBookPage" class="m-3"> Add book</BButton>
+  </nav>
   <BTable :items="books" :fields="['title', 'author', 'date', { key: 'actions', label: 'Actions' }]">
     <template #cell(actions)="row">
       <BButton class="button" variant="danger" @click="deleteItem(row.item.id)">Delete</BButton>

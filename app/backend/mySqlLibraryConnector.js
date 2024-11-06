@@ -1,12 +1,4 @@
-import mysql from 'mysql2/promise'
-
-const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'admintest',
-  database: 'library_manager',
-  waitForConnections: true
-})
+import pool from './mysql.js';
 
 export function getBooksByUser (id_user) {
   return new Promise(async (resolve, reject) => {
