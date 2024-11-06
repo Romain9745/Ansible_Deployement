@@ -14,7 +14,7 @@ export function retrieveBooksByTitle (title) {
             for (let book of JSON.parse(data).docs) {
               let bookToAdd = {
                 title: book.title,
-                author: book.author_name,
+                author: book.author_name[0],
                 publish_date: book.first_publish_year
               }
               books.push(bookToAdd)
@@ -45,7 +45,7 @@ export function retrieveBooksByAuthor (author) {
             for (let book of JSON.parse(data).docs) {
               let bookToAdd = {
                 title: book.title,
-                author: book.author_name,
+                author: book.author_name[0],
                 publish_date: book.first_publish_year
               }
               books.push(bookToAdd)

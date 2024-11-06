@@ -2,10 +2,13 @@
 import {useAuthStore} from '../store/auth.js';
 import {computed, onMounted, ref} from 'vue';
 import axios from "axios";
+import {useRouter} from "vue-router";
+import Navbar from "@/components/Navbar.vue";
 
 const authStore = useAuthStore();
 const userId = computed(() => authStore.userId);
 const books = ref()
+const router = useRouter()
 
 onMounted(async () => {
   axios.get('http://localhost:3000/protected/books', {
@@ -24,7 +27,7 @@ onMounted(async () => {
       })
 })
 
-function onDelete(itemId) {
+function deleteItem(itemId) {
   axios.delete(`http://localhost:3000/protected/books`, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -39,12 +42,17 @@ function onDelete(itemId) {
         console.log(error)
       })
 }
+
+function openAddBookPage() {
+  router.push({name: "addBook"})
+}
 </script>
 
 <template>
+  <Navbar/>
   <BTable :items="books" :fields="['title', 'author', 'date', { key: 'actions', label: 'Actions' }]">
     <template #cell(actions)="row">
-      <BButton class="button" variant="danger" @click="onDelete(row.item.id)">Delete</BButton>
+      <BButton class="button" variant="danger" @click="deleteItem(row.item.id)">Delete</BButton>
     </template>
   </BTable>
 </template>

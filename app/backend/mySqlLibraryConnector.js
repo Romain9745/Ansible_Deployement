@@ -27,10 +27,11 @@ export function getBooksByUser (id_user) {
 export function addBookToUser (id_user, book) {
   return new Promise(async (resolve, reject) => {
     try {
+      let publish_date = new Date(book.publish_date)
       const connection = await pool.getConnection()
       await connection.query(
         'INSERT INTO Books (id_user, title, author, date) VALUES (?, ?, ?, ?)',
-        [id_user, book.title, book.author, book.publish_date]
+        [id_user, book.title, book.author, publish_date]
       )
       connection.release()
       resolve()
