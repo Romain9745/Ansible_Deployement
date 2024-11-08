@@ -3,7 +3,7 @@ name: Build and Push Docker Backend Image to GitHub Container Registry
 on:
   push:
     branches:
-      - main  # Adjust as needed
+      - add_github_automation  # Adjust as needed
   pull_request:
     branches:
       - main
