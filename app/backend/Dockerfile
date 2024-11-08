@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Command to run the application
-CMD [ "ls", "-la", "app" ]
+CMD [ "node", "app.js" ]
