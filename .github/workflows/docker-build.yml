@@ -32,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: app/backend
-          file: Dockerfile  # Specify the Dockerfile path here
+          file: app/backend/Dockerfile  # Specify the Dockerfile path here
           push: true
           tags: maxgrc/backend-library:latest
