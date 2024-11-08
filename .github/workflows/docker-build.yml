@@ -35,3 +35,10 @@ jobs:
           file: app/backend/Dockerfile  # Specify the Dockerfile path here
           push: true
           tags: maxgrc/backend-library:latest
+
+
+      - name: Build and push Docker backend image + sql
+        run: |
+          docker-compose -f docker-compose.yml build
+          docker tag maxgrc/backend-library_backend:latest maxgrc/backend-library:latest
+          docker push maxgrc/backend-library:latest

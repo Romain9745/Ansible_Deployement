@@ -2,6 +2,19 @@ version: '3.1'
 
 services:
 
+  backend:
+    build: ./app/backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=admintest
+      - DB_SCHEMA=library_manager
+      - SECRET_KEY=coucou
+    depends_on:
+      - db
+
   db:
     image: mysql
     restart: always
