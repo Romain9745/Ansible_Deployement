@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   backend:
-    build: ./app/backend
+    image: maxgrc/backend-library:latest
     ports:
       - "3000:3000"
     environment:
