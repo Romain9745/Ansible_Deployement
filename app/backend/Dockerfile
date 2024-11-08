@@ -16,5 +16,6 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 3000
 
+RUN cd app
 # Command to run the application
 CMD [ "ls", "-la" ]
