@@ -2,6 +2,29 @@ version: '3.1'
 
 services:
 
+
+  backend:
+    image: twetch/backend-library:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=admintest
+      - DB_SCHEMA=library_manager
+      - SECRET_KEY=coucou
+    depends_on:
+      - db
+
+  frontend:
+    image: twetch/frontend-library:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - VUE_APP_API_URL=http://localhost:3000
+    depends_on:
+      - backend
+
   db:
     image: mysql
     restart: always
