@@ -19,7 +19,7 @@ services:
   frontend:
     image: twetch/frontend-library:latest
     ports:
-      - "8080:8080"
+      - "5173:5173"
     environment:
       - VUE_APP_API_URL=http://localhost:3000
     depends_on:
