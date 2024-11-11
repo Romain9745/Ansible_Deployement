@@ -9,7 +9,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-app.use(cors({origin: ['http://localhost:5173', 'http://127.0.0.1:5173']}));
+app.use(cors({origin: ['http://localhost:5173', 'http://127.0.0.1:5173','http://localhost:4173', 'http://127.0.0.1:4173']}));
 app.use('/auth', authRoutes);
 app.use('/protected', protectedRoute);
 
