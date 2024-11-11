@@ -34,14 +34,16 @@ router.post('/login',[
     }
 });
 
-router.get('/signup',body('username').isLength({ min: 3 }).trim().escape().custom(async (value) => {
-if(checkUser(value)) throw new Error('Username already in use');}),async (req,res) => {
+router.post('/signup',[body('username').isLength({ min: 3 }).trim().escape().custom(async (value) => {
+var check =  await checkUser(value)
+if(check){throw new Error('Username already in use');}}),body('password').isLength({ min: 8})],async (req,res) => {
     try {
         if (!validationResult(req).isEmpty()) {
+            console.log(validationResult(req).array());
             return res.status(400).send('Invalid input');
         }
         const data = matchedData(req);
-        newpassword = await bcrypt.hash(data.password, 10);
+        const newpassword = await bcrypt.hash(data.password, 10);
         await createUser(data.username, newpassword);
         res.status(201).send('User created');
     } catch (error) {
@@ -65,8 +67,9 @@ async function createUser(username, password) {
 }
 
 async function checkUser(username) {
-    const [rows] = await pool.query('SELECT * FROM users WHERE name = ?', [username]);
-    return rows.length > 0;
+    const [rows] = await pool.query('SELECT * FROM Users WHERE name = ?', [username]);
+    if(rows.length > 0) return true
+    else return false
 }
 
 export default router;
