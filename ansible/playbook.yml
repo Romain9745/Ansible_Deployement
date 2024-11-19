@@ -16,11 +16,15 @@
     secret_key: 'coucou' # Set database name
 
   tasks:
-    - name: Install Docker
-      ansible.builtin.apt:
-        name: docker.io
-        state: present
-        update_cache: true
+    - name: Check if Docker is installed using package facts
+      ansible.builtin.package_facts:
+
+    - name: Install Docker if not already installed
+    ansible.builtin.apt:
+      name: docker.io
+      state: present
+      update_cache: true
+    when: "'docker.io' not in ansible_facts.packages"
 
     - name: Create a custom Docker network
       community.docker.docker_network:
