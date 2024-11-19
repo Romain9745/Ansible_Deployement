@@ -63,6 +63,7 @@ jobs:
           tags: ${{ vars.DOCKER_USERNAME }}/frontend-library:latest
   
   deploy-ansible:
+    needs: [build-and-push-docker-backend-image, build-and-push-docker-frontend-image]
     runs-on: ubuntu-latest
     environment: Ansible_deploy
 
@@ -93,4 +94,4 @@ jobs:
       run: |
         echo "[remote-server]" > hosts
         echo "${{ secrets.REMOTE_SERVER_IP }} ansible_port=${{ secrets.SSH_PORT }} ansible_user=${{ secrets.SSH_USER }} ansible_ssh_private_key_file=~/.ssh/id_rsa" >> hosts
-        ansible-playbook -i hosts playbook.yml
+        ansible-playbook -i hosts ansible/playbook.yml
