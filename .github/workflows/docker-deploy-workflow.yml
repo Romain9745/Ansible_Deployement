@@ -80,6 +80,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install ansible
+    
+    - name: Set ANSIBLE_CONFIG environment variable
+      run: echo "ANSIBLE_CONFIG=ansible/ansible.cfg" >> $GITHUB_ENV
 
     - name: Configure SSH
       run: |
