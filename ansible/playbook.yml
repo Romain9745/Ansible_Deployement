@@ -1,6 +1,5 @@
 ---
 - name: Deploy Vue, Node.js, and MySQL Docker containers
-  hosts: localhost
   connection: local
   become: true
   vars:
