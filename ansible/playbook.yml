@@ -14,8 +14,16 @@
     db_name: 'library_manager'
     init_sql: '../app/backend/database/init.sql'
     secret_key: 'coucou' # Set database name
+    pip_package_requirements:
+      - "requests"
 
   tasks:
+    - name: Install pip requests library
+      pip:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ pip_package_requirements }}"
+    
     - name: Check if Docker is already installed
       ansible.builtin.command: docker --version
       register: docker_check
