@@ -106,4 +106,5 @@ jobs:
         echo "      ansible_port: ${{ secrets.SSH_PORT }}" >> hosts
         echo "      ansible_user: ${{ secrets.SSH_USER }}" >> hosts
         echo "      ansible_password: ${{ secrets.SSH_PASSWORD }}" >> hosts
+        echo "      ansible_become_password: ${{ secrets.SSH_PASSWORD }}" >> hosts
         ansible-playbook -i hosts ansible/playbook.yml -v
