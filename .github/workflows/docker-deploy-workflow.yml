@@ -92,7 +92,7 @@ jobs:
 
     - name: Copier le script SQL sur le serveur
       run: |
-        scp -i ~/.ssh/id_rsa -P ${{ secrets.SSH_PORT }} app/backend/database/init.sql ${{ secrets.SSH_USER }}@${{ secrets.REMOTE_SERVER_IP }}:/tmp/init.sql 
+        scp -P ${{ secrets.SSH_PORT }} app/backend/database/init.sql ${{ secrets.SSH_USER }}@${{ secrets.REMOTE_SERVER_IP }}:/tmp/init.sql 
 
     - name: Deploy with Ansible
       env:
