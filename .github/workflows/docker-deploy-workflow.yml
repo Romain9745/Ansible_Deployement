@@ -84,15 +84,26 @@ jobs:
     - name: Set ANSIBLE_CONFIG environment variable
       run: echo "ANSIBLE_CONFIG=ansible/ansible.cfg" >> $GITHUB_ENV
 
-    - name: Set up hosts file for Ansible
-      run: |
-        echo "[remote-server]" > hosts
-        echo "${{ secrets.REMOTE_SERVER_IP }} ansible_port=${{ secrets.SSH_PORT }} ansible_user=${{ secrets.SSH_USER }} ansible_ssh_pass=${{ secrets.SSH_PASSWORD }}" >> hosts
-        cat hosts
+    - name: executing remote commands
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_SERVER_IP }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          scp app/backend/database/init.sql ${{ secrets.SSH_USER }}@${{ secrets.REMOTE_SERVER_IP }}:/tpm/init.sql
 
     - name: Deploy with Ansible
       env:
         ANSIBLE_HOST_KEY_CHECKING: "false"
         ANSIBLE_STDOUT_CALLBACK: "debug"
       run: |
-        ansible-playbook -i hosts ansible/playbook.yml -vvvv
+        echo "all:" > hosts
+        echo "  hosts:" >> hosts
+        echo "    remote:" >> hosts
+        echo "      ansible_host: ${{ secrets.REMOTE_SERVER_IP }}" >> hosts
+        echo "      ansible_port: ${{ secrets.SSH_PORT }}" >> hosts
+        echo "      ansible_user: ${{ secrets.SSH_USER }}" >> hosts
+        echo "      ansible_password: ${{ secrets.SSH_PASSWORD }}" >> hosts
+        ansible-playbook -i hosts ansible/playbook.yml -v
