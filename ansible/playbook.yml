@@ -17,12 +17,6 @@
       - "requests"
 
   tasks:
-    - name: Install pip requests library
-      pip:
-        name: "{{ item }}"
-        state: present
-      with_items: "{{ pip_package_requirements }}"
-    
     - name: Check if Docker is already installed
       ansible.builtin.command: docker --version
       register: docker_check
