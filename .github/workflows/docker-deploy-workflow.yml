@@ -90,5 +90,5 @@ jobs:
         ANSIBLE_STDOUT_CALLBACK: "debug"
       run: |
         echo "[remote-server]" > hosts
-        echo "${{ secrets.REMOTE_SERVER_IP }} ansible_port=${{ secrets.SSH_PORT }} ansible_user=${{ secrets.SSH_USER }} ansible_password=${{ secrets.SSH_PASSWORD }} >> hosts
+        echo "${{ secrets.REMOTE_SERVER_IP }} ansible_port=${{ secrets.SSH_PORT }} ansible_user=${{ secrets.SSH_USER }} ansible_password=${{ secrets.SSH_PASSWORD }}" >> hosts
         ansible-playbook -i hosts ansible/playbook.yml -v
