@@ -12,7 +12,7 @@
     db_user: 'root' # Set database user
     db_password: 'password' # Set database password
     db_name: 'library_manager'
-    init_sql: '../app/backend/database/init.sql'
+    init_sql: '/tmp/init.sql'
     secret_key: 'coucou' # Set database name
     pip_package_requirements:
       - "requests"

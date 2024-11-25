@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS Books (
     FOREIGN KEY (id_user) REFERENCES Users(id)
 );
 
-INSERT INTO Users (name,password) VALUES ('JohnDoe','$2b$10$z3FieZbGaG4/tGX7RP6ddeHPYL0Y3Fnvl0E2ZunFo0KllacBQ05RW');
-INSERT INTO Users (name,password) VALUES ('JAck','$2b$10$z3FieZbGaG4/tGX7RP6ddeHPYL0Y3Fnvl0E2ZunFo0KllacBQ05RWs');
+INSERT INTO Users (name,password) VALUES ('JohnDoe','$2b$10$CWa3qK9/jmm3nuScU4n3dufwE9wM7iQAg8H3MM7BZvvs0C9zbEpui');
+INSERT INTO Users (name,password) VALUES ('JAck','$2b$10$CWa3qK9/jmm3nuScU4n3dufwE9wM7iQAg8H3MM7BZvvs0C9zbEpui');
 
 INSERT INTO Books (id_user, title, author, date) VALUES (1, 'The Great Gatsby', 'F. Scott Fitzgerald', '1925-04-10');
 INSERT INTO Books (id_user, title, author, date) VALUES (1, 'To Kill a Mockingbird', 'Harper Lee', '1960-07-11');

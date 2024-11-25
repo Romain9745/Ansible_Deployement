@@ -8,13 +8,12 @@ const router = express.Router();
 
 router.post('/login',[
     check('username').isLength({ min: 3 }).trim().escape(),
-    check('password').notEmpty().trim().escape(),
+    check('password').notEmpty().escape(),
   ], async (req, res) => {
     try {
         if (!validationResult(req).isEmpty()) {
             return res.status(400).send('Invalid input');
         }
-
         const data = matchedData(req);
         const id = req.body.id;
         const user = await getUser(data.username);
@@ -43,7 +42,9 @@ if(check){throw new Error('Username already in use');}}),body('password').isLeng
             return res.status(400).send('Invalid input');
         }
         const data = matchedData(req);
+        console.log(data);
         const newpassword = await bcrypt.hash(data.password, 10);
+        console.log(newpassword);
         await createUser(data.username, newpassword);
         res.status(201).send('User created');
     } catch (error) {
@@ -61,8 +62,7 @@ export async function getUser(username) {
     return rows[0];
 }
 
-async function createUser(username, password) {
-    const hashedPassword = await bcrypt.hash(password, 10);
+async function createUser(username, hashedPassword) {
     await pool.query('INSERT INTO Users (name, password) VALUES (?, ?)', [username, hashedPassword]);
 }
 
