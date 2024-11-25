@@ -84,12 +84,15 @@ jobs:
     - name: Set ANSIBLE_CONFIG environment variable
       run: echo "ANSIBLE_CONFIG=ansible/ansible.cfg" >> $GITHUB_ENV
 
+    - name: Set up hosts file for Ansible
+      run: |
+        echo "[remote-server]" > hosts
+        echo "${{ secrets.REMOTE_SERVER_IP }} ansible_port=${{ secrets.SSH_PORT }} ansible_user=${{ secrets.SSH_USER }} ansible_ssh_pass=${{ secrets.SSH_PASSWORD }}" >> hosts
+        cat hosts
+
     - name: Deploy with Ansible
       env:
         ANSIBLE_HOST_KEY_CHECKING: "false"
         ANSIBLE_STDOUT_CALLBACK: "debug"
       run: |
-        echo "[remote_server]" > hosts
-        echo "${{ secrets.REMOTE_SERVER_IP }} ansible_port=${{ secrets.SSH_PORT }} ansible_user=${{ secrets.SSH_USER }} ansible_password=${{ secrets.SSH_PASSWORD }}" >> hosts
-        cat hosts
         ansible-playbook -i hosts ansible/playbook.yml -vvvv
