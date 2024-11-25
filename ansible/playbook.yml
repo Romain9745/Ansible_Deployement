@@ -1,7 +1,6 @@
 ---
 - name: Deploy Vue, Node.js, and MySQL Docker containers
-  hosts: remote_server
-  connection: local
+  hosts: remote
   become: true
   vars:
     vue_image: 'twetch/frontend-library:latest' # Replace with your Vue app image
