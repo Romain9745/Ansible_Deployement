@@ -90,9 +90,12 @@ jobs:
         echo "${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
+    - name: List repository files
+      run: ls -R
+
     - name: Copier le script SQL sur le serveur
       run: |
-        scp app/backend/database/init.sql ${{ secrets.SSH_USER }}@${{ secrets.REMOTE_SERVER_IP }}:/tmp/init.sql -P ${{ secrets.SSH_PORT }}
+        scp -P ${{ secrets.SSH_PORT }} app/backend/database/init.sql ${{ secrets.SSH_USER }}@${{ secrets.REMOTE_SERVER_IP }}:/tmp/init.sql 
       env:
         SSH_PRIVATE_KEY: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
 
