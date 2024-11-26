@@ -11,7 +11,7 @@
     db_user: 'root' # Set database user
     db_password: 'password' # Set database password
     db_name: 'library_manager'
-    init_sql: '/tmp/init.sql'
+    init_sql: '/tmp/sql'
     secret_key: 'coucou' # Set database name
     pip_package_requirements:
       - "requests"
@@ -64,7 +64,7 @@
           - '3306:3306'
         volumes:
           - '{{ db_volume }}:/var/lib/mysql'
-          - '{{ init_sql }}:/docker-entrypoint-initdb.d/init.sql'
+          - '{{ init_sql }}:/docker-entrypoint-initdb.d'
         restart_policy: always
 
     - name: Run Node.js container
