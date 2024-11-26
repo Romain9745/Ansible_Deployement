@@ -92,7 +92,8 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
         source: "./app/backend/database/init.sql"
-        target: "/tmp/sql/"
+        strip_components: 3
+        target: "/tmp/sql"
 
     - name: Deploy with Ansible
       env:
