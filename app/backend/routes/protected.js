@@ -7,7 +7,6 @@ import {addBookToUser, deleteBook, getBooksByUser} from "../mySqlLibraryConnecto
 
 const router = express.Router();
 
-console.log(process.env.SECRET_KEY);
 const jwtMiddleware = expressjwt({
     secret: process.env.SECRET_KEY, // Remplacez par votre clé secrète
     algorithms: ['HS256'],

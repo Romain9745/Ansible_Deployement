@@ -2,7 +2,7 @@
 import {useAuthStore} from '../store/auth.js';
 import {computed, onMounted, ref} from 'vue';
 import axios from "axios";
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore();
 const userId = computed(() => authStore.userId);
@@ -45,11 +45,17 @@ function deleteItem(itemId) {
 function openAddBookPage() {
   router.push({name: "addBook"})
 }
+
+function logout() {
+  authStore.logout()
+  router.push({name: "login"})
+}
 </script>
 
 <template>
   <nav class="navbar navbar-expand-lg navbar-light w-100">
       <BButton @click="openAddBookPage" class="m-3"> Add book</BButton>
+      <BButton @click="logout" class="m-3"> Logout</BButton>
   </nav>
   <BTable :items="books" :fields="['title', 'author', 'date', { key: 'actions', label: 'Actions' }]">
     <template #cell(actions)="row">

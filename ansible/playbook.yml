@@ -1,7 +1,6 @@
 ---
 - name: Deploy Vue, Node.js, and MySQL Docker containers
-  hosts: localhost
-  connection: local
+  hosts: remote
   become: true
   vars:
     vue_image: 'twetch/frontend-library:latest' # Replace with your Vue app image
@@ -12,15 +11,23 @@
     db_user: 'root' # Set database user
     db_password: 'password' # Set database password
     db_name: 'library_manager'
-    init_sql: '../app/backend/database/init.sql'
+    init_sql: '/tmp/sql'
     secret_key: 'coucou' # Set database name
+    pip_package_requirements:
+      - "requests"
 
   tasks:
-    - name: Install Docker
+    - name: Check if Docker is already installed
+      ansible.builtin.command: docker --version
+      register: docker_check
+      ignore_errors: true
+
+    - name: Install Docker if not present
       ansible.builtin.apt:
         name: docker.io
         state: present
         update_cache: true
+      when: docker_check.rc != 0
 
     - name: Create a custom Docker network
       community.docker.docker_network:
@@ -57,7 +64,7 @@
           - '3306:3306'
         volumes:
           - '{{ db_volume }}:/var/lib/mysql'
-          - '{{ init_sql }}:/docker-entrypoint-initdb.d/init.sql'
+          - '{{ init_sql }}:/docker-entrypoint-initdb.d'
         restart_policy: always
 
     - name: Run Node.js container
